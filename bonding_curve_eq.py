@@ -49,7 +49,7 @@ def withdraw(deltaS, R,S, V0, kappa=default_kappa):
 
 def withdraw_with_tax(deltaS, R,S, V0, exit_tax = default_exit_tax, kappa=default_kappa):
     deltaR = R-((S-deltaS)**kappa)/V0
-    print(deltaR)
+    #print(deltaR)
     quantity_taxed = exit_tax*deltaR
     quantity_recieved = (1-exit_tax)*deltaR
     
