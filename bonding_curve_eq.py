@@ -1,4 +1,4 @@
-
+import numpy as np
 
 default_kappa= 2
 default_exit_tax = .02
@@ -34,7 +34,10 @@ def spot_price(R, V0, kappa=default_kappa):
 #with realized price deltaR/deltaS
 def mint(deltaR, R,S, V0, kappa=default_kappa):
     deltaS = (V0*(R+deltaR))**(1/kappa)-S
-    realized_price = deltaR/deltaS
+    if deltaS ==0:
+        realized_price = spot_price(R+deltaR, V0, kappa)
+    else:
+        realized_price = deltaR/deltaS
     return deltaS, realized_price
 
 #for a given state (R,S)
@@ -44,7 +47,10 @@ def mint(deltaR, R,S, V0, kappa=default_kappa):
 #with realized price deltaR/deltaS
 def withdraw(deltaS, R,S, V0, kappa=default_kappa):
     deltaR = R-((S-deltaS)**kappa)/V0
-    realized_price = deltaR/deltaS
+    if deltaS ==0:
+        realized_price = spot_price(R+deltaR, V0, kappa)
+    else:
+        realized_price = deltaR/deltaS
     return deltaR, realized_price
 
 def withdraw_with_tax(deltaS, R,S, V0, exit_tax = default_exit_tax, kappa=default_kappa):
